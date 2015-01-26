@@ -78,7 +78,11 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        oi.drive.mecanumDrive_Cartesian(oi.leftJoy.getX(), oi.leftJoy.getY(), oi.rightJoy.getX(), 0);
+        double deadzone = 0.05;
+        double x = Math.abs(oi.leftJoy.getX()) >= deadzone ? oi.leftJoy.getX() : 0;
+        double y = Math.abs(oi.leftJoy.getY()) >= deadzone ? oi.leftJoy.getY() : 0;
+        double r = Math.abs(oi.rightJoy.getX()) >= deadzone ? oi.rightJoy.getX() : 0;
+        oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
     }
     
     /**
