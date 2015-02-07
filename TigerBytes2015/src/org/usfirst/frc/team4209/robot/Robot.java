@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -83,6 +84,13 @@ public class Robot extends IterativeRobot {
         double y = Math.abs(oi.leftJoy.getY()) >= deadzone ? oi.leftJoy.getY() : 0;
         double r = Math.abs(oi.rightJoy.getX()) >= deadzone ? oi.rightJoy.getX() : 0;
         oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
+        
+        SmartDashboard.putNumber("Gyro Angle", oi.gyro.getAngle());
+        
+        
+        if (oi.leftJoy.getRawButton(1)) {
+        	oi.gyro.reset();
+        }
     }
     
     /**

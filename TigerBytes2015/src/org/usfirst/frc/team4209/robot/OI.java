@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4209.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
@@ -29,6 +31,12 @@ public class OI {
 	private SpeedController leftBackTalon;
 	
 	public RobotDrive drive;
+	
+	public Gyro gyro;
+	
+	public DoubleSolenoid armPiston;
+	
+	
    // There are a few additional built in buttons you can use. Additionally,
    // by subclassing Button you can create custom triggers and bind those to
    // commands the same as any other Button.
@@ -57,6 +65,8 @@ public class OI {
 	}
 	
 	private OI() {
+		gyro = new Gyro(0);
+		
 		leftJoy = new Joystick(0);
 		rightJoy = new Joystick(1);
 		
@@ -64,6 +74,8 @@ public class OI {
 		rightBackTalon = new Talon(1);
 		leftFrontTalon = new Talon(2);
 		leftBackTalon = new Talon(3);
+		
+		armPiston = new DoubleSolenoid(0,1);
 		
 		drive = new RobotDrive(leftFrontTalon, leftBackTalon, rightFrontTalon, rightBackTalon);
 		drive.setInvertedMotor(MotorType.kFrontRight, true);
