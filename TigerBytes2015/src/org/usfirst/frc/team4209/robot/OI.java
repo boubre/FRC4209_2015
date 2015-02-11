@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 
 
 /**
@@ -24,11 +25,14 @@ public class OI {
    // Button button = new JoystickButton(stick, buttonNumber);
 	public Joystick leftJoy;
 	public Joystick rightJoy;
+	public Joystick utilityJoy;
 	
 	private SpeedController leftFrontTalon;
 	private SpeedController rightFrontTalon;
 	private SpeedController rightBackTalon;
 	private SpeedController leftBackTalon;
+	
+	public SpeedController forkliftMotor;
 	
 	public RobotDrive drive;
 	
@@ -69,11 +73,14 @@ public class OI {
 		
 		leftJoy = new Joystick(0);
 		rightJoy = new Joystick(1);
+		utilityJoy = new Joystick(2);
 		
 		rightFrontTalon = new Talon(0);
 		rightBackTalon = new Talon(1);
 		leftFrontTalon = new Talon(2);
 		leftBackTalon = new Talon(3);
+		
+		forkliftMotor = new Victor(4);
 		
 		armPiston = new DoubleSolenoid(0,1);
 		

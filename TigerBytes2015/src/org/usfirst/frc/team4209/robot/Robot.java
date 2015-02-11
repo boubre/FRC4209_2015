@@ -70,7 +70,8 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit(){
-
+    	oi.drive.tankDrive(0, 0);
+    	oi.forkliftMotor.set(0);
     }
 
     /**
@@ -80,13 +81,15 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         double deadzone = 0.05;
-        double x = Math.abs(oi.leftJoy.getX()) >= deadzone ? oi.leftJoy.getX() : 0;
-        double y = Math.abs(oi.leftJoy.getY()) >= deadzone ? oi.leftJoy.getY() : 0;
-        double r = Math.abs(oi.rightJoy.getX()) >= deadzone ? oi.rightJoy.getX() : 0;
+        double x = deadzone(deadzone, oi.leftJoy.getX());
+        double y = deadzone(deadzone, oi.leftJoy.getY());
+        double r = deadzone(deadzone, oi.rightJoy.getX());
         oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
         
-        SmartDashboard.putNumber("Gyro Angle", oi.gyro.getAngle());
+        double lift = deadzone(deadzone, oi.utilityJoy.getY());
+        oi.forkliftMotor.set(lift);
         
+        SmartDashboard.putNumber("Gyro", oi.gyro.getAngle());
         
         if (oi.leftJoy.getRawButton(1)) {
         	oi.gyro.reset();
@@ -99,5 +102,15 @@ public class Robot extends IterativeRobot {
     @Override
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    /**
+     * Thresholds a value based on the specified deadzone.
+     * @param tolerance The deadzone tolerance.
+     * @param value The value to threshold.
+     * @return The thresholded value. (0 if less than tolerance.)
+     */
+    private double deadzone(double tolerance, double value) {
+    	return Math.abs(value) >= tolerance ? value : 0;
     }
 }
