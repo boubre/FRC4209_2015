@@ -1,6 +1,9 @@
 package org.usfirst.frc.team4209.robot;
 
+import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -38,6 +41,11 @@ public class OI {
 	
 	public Gyro gyro;
 	
+	public Encoder forkliftEncoder;
+	
+	public DigitalInput forkliftFloor;
+	public DigitalInput forkliftCeiling;
+	
 	public DoubleSolenoid armPiston;
 	
 	
@@ -70,6 +78,12 @@ public class OI {
 	
 	private OI() {
 		gyro = new Gyro(0);
+		
+		forkliftEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
+		forkliftEncoder.setDistancePerPulse(1 / 720.0);
+		
+		forkliftFloor = new DigitalInput(2);
+		forkliftCeiling = new DigitalInput(3);
 		
 		leftJoy = new Joystick(0);
 		rightJoy = new Joystick(1);

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -89,7 +88,9 @@ public class Robot extends IterativeRobot {
         double lift = deadzone(deadzone, oi.utilityJoy.getY());
         oi.forkliftMotor.set(lift);
         
-        SmartDashboard.putNumber("Gyro", oi.gyro.getAngle());
+        //System.out.println("Encoder: " + oi.forkliftEncoder.getDistance());
+        
+        //System.out.println("Gyro: " + oi.gyro.getAngle());
         
         if (oi.leftJoy.getRawButton(1)) {
         	oi.gyro.reset();
