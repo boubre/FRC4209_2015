@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team4209.robot;
 
+import org.usfirst.frc.team4209.robot.commands.DefaultDrive;
+import org.usfirst.frc.team4209.robot.commands.DefaultForklift;
 import org.usfirst.frc.team4209.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4209.robot.subsystems.ExampleSubsystem;
 
@@ -20,9 +22,12 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
+	
+	public static final double DEADZONE = 0.05;
 
     Command autonomousCommand;
-    Command mecanumDrive;
+    Command defaultDrive;
+    Command defaultForklift;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -33,27 +38,17 @@ public class Robot extends IterativeRobot {
 		oi = OI.getInstance();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
+        defaultDrive = new DefaultDrive();
+        defaultForklift = new DefaultForklift();
     }
 	
     @Override
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
-
-    @Override
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+    	defaultDrive.cancel();
+    	defaultForklift.cancel();
         if (autonomousCommand != null) autonomousCommand.start();
     }
-
-    /**
-     * This function is called periodically during autonomous
-     */
-    @Override
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
-
+    
     @Override
     public void teleopInit() {
 		// This makes sure that the autonomous stops running when
@@ -61,16 +56,18 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        defaultDrive.start();
+        defaultForklift.start();
     }
-
+    
     /**
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
     @Override
     public void disabledInit(){
-    	oi.drive.tankDrive(0, 0);
-    	oi.forkliftMotor.set(0);
+    	defaultDrive.cancel();
+    	defaultForklift.cancel();
     }
 
     /**
@@ -79,14 +76,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        double deadzone = 0.05;
-        double x = deadzone(deadzone, oi.leftJoy.getX());
-        double y = deadzone(deadzone, oi.leftJoy.getY());
-        double r = deadzone(deadzone, oi.rightJoy.getX());
-        oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
-        
-        double lift = deadzone(deadzone, oi.utilityJoy.getY());
-        oi.forkliftMotor.set(lift);
         
         //System.out.println("Encoder: " + oi.forkliftEncoder.getDistance());
         
@@ -96,6 +85,19 @@ public class Robot extends IterativeRobot {
         	oi.gyro.reset();
         }
     }
+    
+    /**
+     * This function is called periodically during autonomous
+     */
+    @Override
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
+    }
+    
+    @Override
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+	}
     
     /**
      * This function is called periodically during test mode
@@ -111,7 +113,7 @@ public class Robot extends IterativeRobot {
      * @param value The value to threshold.
      * @return The thresholded value. (0 if less than tolerance.)
      */
-    private double deadzone(double tolerance, double value) {
+    public static double deadzone(double tolerance, double value) {
     	return Math.abs(value) >= tolerance ? value : 0;
     }
 }

@@ -1,0 +1,48 @@
+package org.usfirst.frc.team4209.robot.subsystems;
+
+import org.usfirst.frc.team4209.robot.OI;
+import org.usfirst.frc.team4209.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+/**
+ * The robot drive train subsystem
+ */
+public class DriveTrain extends Subsystem {
+	private static DriveTrain instance = new DriveTrain();
+	
+	/**
+	 * @return The singleton instance of the drive train.
+	 */
+	public static DriveTrain getInstance() {
+		return instance;
+	}
+	
+	/**
+	 * Create a new drive train.
+	 */
+	private DriveTrain() { };
+	
+	@Override
+	public void initDefaultCommand() {
+
+	}
+	
+	/**
+	 * Drive the robot based on joystick input.
+	 */
+	public void drive() {
+		OI oi = OI.getInstance();
+        double x = Robot.deadzone(Robot.DEADZONE, oi.leftJoy.getX());
+        double y = Robot.deadzone(Robot.DEADZONE, oi.leftJoy.getY());
+        double r = Robot.deadzone(Robot.DEADZONE, oi.rightJoy.getX());
+        oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
+	}
+	
+	/**
+	 * Stop the robot.
+	 */
+	public void stop() {
+		OI.getInstance().drive.tankDrive(0, 0);
+	}
+}
