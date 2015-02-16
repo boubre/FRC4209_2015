@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4209.robot;
 
+import org.usfirst.frc.team4209.robot.commands.DefaultArm;
 import org.usfirst.frc.team4209.robot.commands.DefaultDrive;
 import org.usfirst.frc.team4209.robot.commands.DefaultForklift;
 import org.usfirst.frc.team4209.robot.commands.ExampleCommand;
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     Command defaultDrive;
     Command defaultForklift;
+    Command defaultArm;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -40,12 +42,15 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new ExampleCommand();
         defaultDrive = new DefaultDrive();
         defaultForklift = new DefaultForklift();
+        defaultArm = new DefaultArm();
+        oi.pistonToggle.whenPressed(defaultArm);
     }
 	
     @Override
     public void autonomousInit() {
     	defaultDrive.cancel();
     	defaultForklift.cancel();
+    	defaultArm.cancel();
         if (autonomousCommand != null) autonomousCommand.start();
     }
     
@@ -68,6 +73,7 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
     	defaultDrive.cancel();
     	defaultForklift.cancel();
+    	defaultArm.cancel();
     }
 
     /**

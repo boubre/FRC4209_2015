@@ -21,7 +21,7 @@ public class DriveTrain extends Subsystem {
 	/**
 	 * Create a new drive train.
 	 */
-	private DriveTrain() { };
+	private DriveTrain() { }
 	
 	@Override
 	public void initDefaultCommand() {

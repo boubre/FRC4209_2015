@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
@@ -47,6 +48,8 @@ public class OI {
 	public DigitalInput forkliftCeiling;
 	
 	public DoubleSolenoid armPiston;
+	
+	public JoystickButton pistonToggle;
 	
 	
    // There are a few additional built in buttons you can use. Additionally,
@@ -101,6 +104,8 @@ public class OI {
 		drive = new RobotDrive(leftFrontTalon, leftBackTalon, rightFrontTalon, rightBackTalon);
 		drive.setInvertedMotor(MotorType.kFrontRight, true);
 		drive.setInvertedMotor(MotorType.kRearRight, true);
+		
+		pistonToggle = new JoystickButton(utilityJoy, 2);
 	}
 	
 }
