@@ -1,10 +1,9 @@
-
 package org.usfirst.frc.team4209.robot;
 
 import org.usfirst.frc.team4209.robot.commands.DefaultArm;
 import org.usfirst.frc.team4209.robot.commands.DefaultDrive;
 import org.usfirst.frc.team4209.robot.commands.DefaultForklift;
-import org.usfirst.frc.team4209.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4209.robot.commands.AutoDrive;
 import org.usfirst.frc.team4209.robot.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,7 +22,7 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	
+	private static final double AUTO_MS = 3000; 
 	public static final double DEADZONE = 0.05;
 
     Command autonomousCommand;
@@ -39,7 +38,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = OI.getInstance();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        autonomousCommand = new AutoDrive(AUTO_MS / 1000.0);
         defaultDrive = new DefaultDrive();
         defaultForklift = new DefaultForklift();
         defaultArm = new DefaultArm();
@@ -63,6 +62,8 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         defaultDrive.start();
         defaultForklift.start();
+        oi.pistonToggle.whenPressed(defaultArm);
+   
     }
     
     /**
@@ -74,6 +75,7 @@ public class Robot extends IterativeRobot {
     	defaultDrive.cancel();
     	defaultForklift.cancel();
     	defaultArm.cancel();
+    	autonomousCommand.cancel();
     }
 
     /**

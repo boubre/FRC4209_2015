@@ -50,7 +50,7 @@ public class OI {
 	public DoubleSolenoid armPiston;
 	
 	public JoystickButton pistonToggle;
-	
+	public JoystickButton pistonToggleTwo;
 	
    // There are a few additional built in buttons you can use. Additionally,
    // by subclassing Button you can create custom triggers and bind those to
@@ -106,7 +106,7 @@ public class OI {
 		drive.setInvertedMotor(MotorType.kRearRight, true);
 		
 		pistonToggle = new JoystickButton(utilityJoy, 2);
+		pistonToggleTwo = new JoystickButton(utilityJoy, 1);
 	}
 	
 }
-

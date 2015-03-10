@@ -38,7 +38,11 @@ public class DriveTrain extends Subsystem {
         double r = Robot.deadzone(Robot.DEADZONE, oi.rightJoy.getX());
         oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
 	}
-	
+	public void driveAuto() {
+		OI oi = OI.getInstance();
+		oi.drive.mecanumDrive_Cartesian(-1, 0, 0, oi.gyro.getAngle());
+		
+	}
 	/**
 	 * Stop the robot.
 	 */
