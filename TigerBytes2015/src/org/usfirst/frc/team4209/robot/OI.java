@@ -31,6 +31,9 @@ public class OI {
 	public Joystick rightJoy;
 	public Joystick utilityJoy;
 	
+	public DigitalInput ceilingSwitch;
+	public DigitalInput floorSwitch;
+	
 	private SpeedController leftFrontTalon;
 	private SpeedController rightFrontTalon;
 	private SpeedController rightBackTalon;
@@ -96,6 +99,9 @@ public class OI {
 		rightBackTalon = new Talon(1);
 		leftFrontTalon = new Talon(2);
 		leftBackTalon = new Talon(3);
+		
+		ceilingSwitch = new DigitalInput(2);
+		floorSwitch = new DigitalInput(3);
 		
 		forkliftMotor = new Victor(4);
 		

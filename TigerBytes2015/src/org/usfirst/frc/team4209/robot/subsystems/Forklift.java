@@ -32,6 +32,9 @@ public class Forklift extends Subsystem{
 	public void move() {
 		OI oi = OI.getInstance();
 		double lift = Robot.deadzone(Robot.DEADZONE, oi.utilityJoy.getY());
+		if ((lift > 0 && oi.ceilingSwitch.get()) || (lift < 0 && oi.floorSwitch.get())) {
+			lift = 0;
+		}
         oi.forkliftMotor.set(lift);
 	}
 	
