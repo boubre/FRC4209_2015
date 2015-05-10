@@ -30,12 +30,20 @@ public class Forklift extends Subsystem{
 	 * Move the forklift based on joystick input.
 	 */
 	public void move() {
-		OI oi = OI.getInstance();
+		OI oi = OI.getInstance(); 
+		//+ is down for lift
 		double lift = Robot.deadzone(Robot.DEADZONE, oi.utilityJoy.getY());
-		if ((lift > 0 && oi.ceilingSwitch.get()) || (lift < 0 && oi.floorSwitch.get())) {
+		if (lift < 0 && !oi.ceilingSwitch.get() ) {// || lift > 0 && !oi.floorSwitch.get()) {
 			lift = 0;
 		}
         oi.forkliftMotor.set(lift);
+	}
+
+	public void lower() {
+		OI oi = OI.getInstance();
+		if (oi.floorSwitch.get()) {
+			oi.forkliftMotor.set(.3);
+		}
 	}
 	
 	/**

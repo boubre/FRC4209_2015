@@ -1,9 +1,7 @@
 package org.usfirst.frc.team4209.robot;
 
-import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -45,15 +43,11 @@ public class OI {
 	
 	public Gyro gyro;
 	
-	public Encoder forkliftEncoder;
-	
-	public DigitalInput forkliftFloor;
-	public DigitalInput forkliftCeiling;
+	//public Encoder forkliftEncoder;
 	
 	public DoubleSolenoid armPiston;
 	
 	public JoystickButton pistonToggle;
-	public JoystickButton pistonToggleTwo;
 	
    // There are a few additional built in buttons you can use. Additionally,
    // by subclassing Button you can create custom triggers and bind those to
@@ -85,11 +79,8 @@ public class OI {
 	private OI() {
 		gyro = new Gyro(0);
 		
-		forkliftEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
-		forkliftEncoder.setDistancePerPulse(1 / 720.0);
-		
-		forkliftFloor = new DigitalInput(2);
-		forkliftCeiling = new DigitalInput(3);
+		//forkliftEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
+		//forkliftEncoder.setDistancePerPulse(1 / 720.0);
 		
 		leftJoy = new Joystick(0);
 		rightJoy = new Joystick(1);
@@ -100,8 +91,9 @@ public class OI {
 		leftFrontTalon = new Talon(2);
 		leftBackTalon = new Talon(3);
 		
-		ceilingSwitch = new DigitalInput(2);
-		floorSwitch = new DigitalInput(3);
+		ceilingSwitch = new DigitalInput(1);
+		//floorSwitch = new DigitalInput(0);
+		
 		
 		forkliftMotor = new Victor(4);
 		
@@ -112,7 +104,6 @@ public class OI {
 		drive.setInvertedMotor(MotorType.kRearRight, true);
 		
 		pistonToggle = new JoystickButton(utilityJoy, 2);
-		pistonToggleTwo = new JoystickButton(utilityJoy, 1);
 	}
 	
 }

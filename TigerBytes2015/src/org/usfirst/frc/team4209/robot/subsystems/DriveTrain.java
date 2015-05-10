@@ -38,11 +38,26 @@ public class DriveTrain extends Subsystem {
         double r = Robot.deadzone(Robot.DEADZONE, oi.rightJoy.getX());
         oi.drive.mecanumDrive_Cartesian(x, y, r, 0);
 	}
+	
+	/**
+	 * Dive forward for autonomous.
+	 */
 	public void driveAuto() {
 		OI oi = OI.getInstance();
 		oi.drive.mecanumDrive_Cartesian(-1, 0, 0, oi.gyro.getAngle());
-		
 	}
+	
+	/**
+	 * Drive the robot with the specified parameters.
+	 * @param mag The magnitude of motion [-1,1].
+	 * @param dir The direction of motion (degrees).
+	 * @param rot Rotation to apply [-1,1].
+	 */
+	public void drive(double mag, double dir, double rot) {
+		OI oi = OI.getInstance();
+		oi.drive.mecanumDrive_Polar(mag, dir, rot);
+	}
+	
 	/**
 	 * Stop the robot.
 	 */

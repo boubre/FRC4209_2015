@@ -1,9 +1,10 @@
 package org.usfirst.frc.team4209.robot;
 
+import org.usfirst.frc.team4209.robot.commands.AutoDrive;
+import org.usfirst.frc.team4209.robot.commands.CoopAutoDrive;
 import org.usfirst.frc.team4209.robot.commands.DefaultArm;
 import org.usfirst.frc.team4209.robot.commands.DefaultDrive;
 import org.usfirst.frc.team4209.robot.commands.DefaultForklift;
-import org.usfirst.frc.team4209.robot.commands.AutoDrive;
 import org.usfirst.frc.team4209.robot.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -19,11 +20,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	private static final double AUTO_MS = 3000; 
-	public static final double DEADZONE = 0.05;
+	private static final double AUTO_MS = 1680; 
+	public static final double DEADZONE = 0.1;
+	
+	private static final boolean COOP_AUTO = false;
 
     Command autonomousCommand;
     Command defaultDrive;
@@ -38,7 +40,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = OI.getInstance();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new AutoDrive(AUTO_MS / 1000.0);
+        autonomousCommand = COOP_AUTO ? 
+        		new CoopAutoDrive() : 
+        		new AutoDrive(AUTO_MS / 1000.0);
         defaultDrive = new DefaultDrive();
         defaultForklift = new DefaultForklift();
         defaultArm = new DefaultArm();
@@ -62,7 +66,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         defaultDrive.start();
         defaultForklift.start();
-        oi.pistonToggle.whenPressed(defaultArm);
+        defaultArm.start();
    
     }
     
@@ -91,7 +95,7 @@ public class Robot extends IterativeRobot {
         
         if (oi.leftJoy.getRawButton(1)) {
         	oi.gyro.reset();
-        }
+        } 
     }
     
     /**

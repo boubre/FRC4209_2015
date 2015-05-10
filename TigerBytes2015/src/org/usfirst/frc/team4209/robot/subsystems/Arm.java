@@ -33,4 +33,7 @@ public class Arm extends Subsystem {
 	public void close() {
 		OI.getInstance().armPiston.set(Value.kReverse);
 	}
+
+		
 }
+
